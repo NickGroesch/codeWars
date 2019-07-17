@@ -3,12 +3,18 @@ function VigenèreCipher(key, abc) {
     this.encode = function (str) {
         let plaintext = str.split('')
         let ciphertext = []
-        for (let i = 0; i < plaintext.length; i++)
-
-            return ciphertext.join('')
+        for (let i = 0; i < plaintext.length; i++) {
+            ciphertext.push(ceasarShift(plaintext[i], key[i % key.length], abc))
+        }
+        return ciphertext.join('')
     };
     this.decode = function (str) {
-        //...
+        let ciphertext = str.split('')
+        let plaintext = []
+        for (let i = 0; i < ciphertext.length; i++) {
+            plaintext.push(ceasarUnShift(ciphertext[i], key[i % key.length], abc))
+        }
+        return plaintext.join('')
     };
 }
 
@@ -17,8 +23,21 @@ function ceasarShift(letter, keyLetter, abc) {
     let index = alphabet.indexOf(letter)
     let keyIndex = alphabet.indexOf(keyLetter)
     // console.log("inside", index)
-    return alphabet[index + keyIndex]
+    if (index == -1) { return letter }
+    return alphabet[(index + keyIndex) % alphabet.length]
 }
+
+function ceasarUnShift(letter, keyLetter, abc) {
+    let alphabet = abc.split('')
+    let index = alphabet.indexOf(letter)
+    let keyIndex = alphabet.indexOf(keyLetter)
+    // console.log("inside", index)
+    if (index == -1) { return letter }
+    let indice = index - keyIndex
+    if (indice < 0) { indice += alphabet.length }
+    return alphabet[indice]
+}
+
 
 // let abc = "abcdefghijklmnopqrstuvwxyz"
 // console.log("outside", ceasarShift("c", "c", abc))
