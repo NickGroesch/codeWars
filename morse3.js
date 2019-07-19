@@ -11,6 +11,15 @@ var decodeBitsAdvanced = function (bits) {
         }
     }
     console.log(numbers)
+    // now lets get the distribution of the numbers
+    let distribution = {}
+    for (let i = 0; i < numbers.length; i++) {
+        if (distribution[numbers[i]]) {
+            distribution[numbers[i]]++
+        } else {
+            distribution[numbers[i]] = 1
+        }
+    }
 }
 
 var decodeMorse = function (morseCode) {
