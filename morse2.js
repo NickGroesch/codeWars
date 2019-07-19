@@ -1,5 +1,5 @@
 var decodeBits = function (bits) {
-    // ToDo: Accept 0's and 1's, return dots, dashes and spaces
+    bits = bits.replace(/^0+|0+$/g, '');
     // we must determine the sample rate relative to the transmission rate. presently assuming whole numbers
     let counter = 0
     let numbers = []
@@ -12,22 +12,28 @@ var decodeBits = function (bits) {
     }
     console.log(numbers)
     // now find greatest common factor of numbers
-    let gcf = 2
+    let gcf = Math.min(...numbers)
     let solved = false
     while (solved = false) {
         for (let i = 0; i < numbers.length; i++) {
             if (numbers[i] % gcf != 0) {
-                gcf += 1
+                gcf -= 1
                 break
             }
         }
         solved = true
     }
     console.log(gcf)
-    // return bits.replace('111', '-').replace('000', ' ').replace('1', '.').replace('0', '');
+    let newbits = ''
+    for (let i = 0; i < bits.length; i += gcf) {
+        newbits += bits[i]
+    }
+    console.log(newbits)
+    return newbits.replace(/0000000/g, '   ').replace(/111/g, '-').replace(/000/g, ' ').replace(/1/g, '.').replace(/0/g, '');
 }
 
 var decodeMorse = function (morseCode) {
+    console.log(morseCode)
     let trimmed = morseCode.trim()
     let words = trimmed.split('   ')
     let message = ''
@@ -43,3 +49,6 @@ var decodeMorse = function (morseCode) {
     return message
     // return morseCode.replace('.', MORSE_CODE['.']).replace('-', MORSE_CODE['-']).replace(' ', '');
 }
+
+
+// console.log(Math.min(...[4, 5, 6, 7, 8, 9]))
