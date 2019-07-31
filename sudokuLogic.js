@@ -1,5 +1,7 @@
 // lets do it with a constructor function
-let square = (row, col, value) => {
+function Square(row, col, value) {
+    this.row = row
+    this.col = col
     if (value) {
         this.solved = true
         this.options = [value]
@@ -7,10 +9,10 @@ let square = (row, col, value) => {
         this.solved = false
         this.options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
-    this.nonent = getNonent()
+    this.nonent = getNonent(row, col)
 }
 
-let getNonent = (row, col) => {
+const getNonent = (row, col) => {
     if (1 <= row && row <= 3) {
         if (1 <= col && col <= 3) { return 1 } else if (4 <= col && col <= 6) { return 2 } else { return 3 }
     } else if (4 <= row && row <= 6) {
@@ -20,12 +22,15 @@ let getNonent = (row, col) => {
     }
 }
 
-console.log(getNonent(1, 1));
-console.log(getNonent(3, 4));
-console.log(getNonent(2, 8));
-console.log(getNonent(4, 1));
-console.log(getNonent(5, 5));
-console.log(getNonent(6, 9));
-console.log(getNonent(7, 2));
-console.log(getNonent(8, 6));
-console.log(getNonent(9, 9));
+const drawEmptyBoard = () => {
+    let board = []
+    for (let i = 1; i <= 9; i++) {
+        let row = []
+        for (let j = 1; j <= 9; j++) {
+            row.push(new Square(i, j))
+        }
+        board.push(row)
+    }
+    return board
+}
+console.log(drawEmptyBoard())
