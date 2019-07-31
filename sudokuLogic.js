@@ -20,12 +20,12 @@ let getNonent = (row, col) => {
     }
 }
 
-// console.log(getNonent(1, 1));
-// console.log(getNonent(3, 4));
-// console.log(getNonent(2, 8));
-// console.log(getNonent(4, 1));
-// console.log(getNonent(5, 5));
-// console.log(getNonent(6, 9));
-// console.log(getNonent(7, 2));
-// console.log(getNonent(8, 6));
-// console.log(getNonent(9, 9));
+console.log(getNonent(1, 1));
+console.log(getNonent(3, 4));
+console.log(getNonent(2, 8));
+console.log(getNonent(4, 1));
+console.log(getNonent(5, 5));
+console.log(getNonent(6, 9));
+console.log(getNonent(7, 2));
+console.log(getNonent(8, 6));
+console.log(getNonent(9, 9));
