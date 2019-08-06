@@ -7,12 +7,13 @@ function code(text) {
     let target = n * n
     let filler = String.fromCharCode(11)
     while (squaretext.length < target) { squaretext += filler }
+    // good through here
     let plaintextArray = []
     let encodedArray = []
     let empty = [""]
     for (let i = 0; i < n; i++) { plaintextArray[i] = squaretext.slice(i * n, (i * n) + (n)); empty[i] = "" }
     console.log(plaintextArray)
-    for (let i = 0; i < n; i++) { plaintextArray[i] = plaintextArray[i].split(""); encodedArray.push(empty) }
+    for (let i = 0; i < n; i++) { plaintextArray[i] = plaintextArray[i].split(""); encodedArray.push(new Array(...empty)) }
     //   let practice=[['a','b','c'],['d','e','f'],['g','h','i']]
     //   let goal=[['','',''],['','',''],['','','']]
     let local = ""
