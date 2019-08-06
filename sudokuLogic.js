@@ -33,4 +33,4 @@ const drawEmptyBoard = () => {
     }
     return board
 }
-console.log(drawEmptyBoard())
+// console.log(drawEmptyBoard())
