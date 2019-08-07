@@ -1,18 +1,24 @@
 function topThreeWords(text) {
     let frequency = {}
     let array = text.match(/[a-zA-z']+/ig)//match words
-    array.forEach((word, index) => array[index] = word.toLowerCase())//clean data
-    array.forEach(word => {//frequency assessment
-        if (frequency[word]) { frequency[word]++ } else { frequency[word] = 1 }
-    });
     let list = []
-    for (word in frequency) {
-        list.push({ letter: word, frequency: frequency[word] })
+    if (array) {
+        array.forEach((word, index) => array[index] = word.toLowerCase())//clean data
+        array.forEach(word => {//frequency assessment
+            if (frequency[word]) { frequency[word]++ } else { frequency[word] = 1 }
+        });
+        for (word in frequency) {
+            list.push({ letter: word, frequency: frequency[word] })
+        }
+        list.sort((a, b) => b.frequency - a.frequency)
+    } else { return [] }
+    if (array[0] == "\'") { return [] }
+    let result = []
+    let returnN = list.length < 3 ? list.length : 3
+    for (let i = 0; i < returnN; i++) {
+        result.push(list[i].letter)
     }
-    list.sort((a, b) => b.frequency - a.frequency)
-
-    // TODO: switch case for return
-    return [list[0].letter, list[1].letter, list[2].letter]
+    return result
 }
 // // given a text, return the top three words by frequency
 
