@@ -9,10 +9,10 @@ function Square(row, col, value) {
         this.solved = false
         this.options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
-    this.nonent = getNonent(row, col)
+    this.nonent = determineNonent(row, col)
 }
 
-const getNonent = (row, col) => {
+const determineNonent = (row, col) => {
     if (1 <= row && row <= 3) {
         if (1 <= col && col <= 3) { return 1 } else if (4 <= col && col <= 6) { return 2 } else { return 3 }
     } else if (4 <= row && row <= 6) {
@@ -33,4 +33,6 @@ const drawEmptyBoard = () => {
     }
     return board
 }
-// console.log(drawEmptyBoard())
+console.log(drawEmptyBoard())
+
+// Let's start to develop some actual game logic. We can have getters and setters for possibilities in each row, column, and nonent
