@@ -7,7 +7,7 @@ function interpreter(code, iterations, width, height) {
     console.log(memory)
     let pointer = [0, 0]
     let commands = code.split('')
-    let comma = 0
+    let comma = 0//short for which command we are on
     let step = 0
     while (commands[comma] && step < iterations) {
         switch (commands[comma]) {
@@ -46,15 +46,15 @@ function interpreter(code, iterations, width, height) {
 
                 break;
             case "[":
-                if (memory[pointer] == 0) { comma = findCloser(comma, commands) }
+                if (memory[pointer[0]][pointer[1]] == 0) { comma = findCloser(comma, commands) }
                 else { comma++ }
                 step++
 
                 break;
             case "]":
-                if (memory[pointer] == 1) { comma = findOpener(comma, commands) }
-                else { comma++ }
-                step++
+                if (memory[pointer[0]][pointer[1]] == 1) { comma = findOpener(comma, commands) }
+                else { comma++; step++ }
+                //                 step++
 
                 break;
             default:
@@ -62,7 +62,7 @@ function interpreter(code, iterations, width, height) {
                 //                 step++
                 break;
         }
-        console.log(pointer)
+        console.log(step, comma, pointer, memory[pointer[0]][pointer[1]])
     }
     console.log(memory)
 
