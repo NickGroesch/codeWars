@@ -60,18 +60,14 @@ let nextBigger = (n) => {
     let descSort = new Array(...digits).sort((a, b) => b - a)
     let ascSort = Array.from(new Set(digits)).sort()
     let word = parseInt(digits.join(""))
-    console.log(descSort.join(""), ascSort.join(""), word)
     if (descSort.join("") == word) {
-        console.log("descSort")
         return -1
     }
     if (ascSort.join("") == word) {
-        console.log("ascSort")
         let temp = digits[digits.length - 1]
         digits[digits.length - 1] = digits[digits.length - 2]
         digits[digits.length - 2] = temp
         return parseInt(digits.join(""))
-        //switch last two digits
     }
     let end = digits.length - 1
     let swapspot
@@ -81,30 +77,37 @@ let nextBigger = (n) => {
             break
         }
     }
-    // console.log(swapspot, digits[swapspot])
+    console.log(`swapspot index:${swapspot}, value: ${digits[swapspot]}`)//gtg
     // let newDigits= digits.
     //if its in descending order its impossible to make a bigger number
     //find the smallest digit greater than swapspot value right of the swapspot index (nextSwap)
-    let localminValue = 10, localminIndex
+    let localminValue = 10
+    var localminIndex = -1
 
     for (let i = swapspot + 1; i < digits.length; i++) {
         let local = parseInt(digits[i])
         if (local > digits[swapspot] && local < localminValue) {
-            localminIndex
+            localminIndex = i
+            localminValue = local
+
         }
     }
-
+    console.log(`nextSwap index:${localminIndex}, value: ${localminValue}`)//gtg
     //swap swapspot value and nextSwap value
+    let temp = digits[localminIndex]
+    digits[localminIndex] = digits[swapspot]
+    digits[swapspot] = temp
 
-    //sort all digits from swapspot index+1 then return
+    console.log(digits.join(""))//gtg
+    //TODO:sort all digits from swapspot index+1 then return
 }
 
 // nextBigger(23514)
 
-console.log(nextBigger(12))//, 21)
+// console.log(nextBigger(12))//, 21) ascending (unique)
 console.log(nextBigger(513))//, 531)
 console.log(nextBigger(2017))//, 2071)
 console.log(nextBigger(414))//, 441)
 console.log(nextBigger(144))//, 414)
-console.log(nextBigger(4321))//, 4321)
-console.log(nextBigger(4333321))//, 4333321)
+// console.log(nextBigger(4321))//, 4321) descending
+// console.log(nextBigger(4333321))//, 4333321) descending
