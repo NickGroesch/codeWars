@@ -18,4 +18,10 @@ let eggs2 = (trys) => {
     }
     console.log(sum)
 }
-eggs2(14)
+eggs2(14)//==105
+eggs2(20)//==210
+
+function makeTree(eggs, tries) {
+    let downNodes = eggs - 1
+
+}
