@@ -100,6 +100,12 @@ let nextBigger = (n) => {
 
     console.log(digits.join(""))//gtg
     //TODO:sort all digits from swapspot index+1 then return
+    let sorted = digits.slice(swapspot + 1).sort()
+    console.log(sorted)
+    digits.splice(swapspot + 1)
+    digits.push(...sorted)
+    console.log(digits)
+    return parseInt(digits.join(""))
 }
 
 // nextBigger(23514)
