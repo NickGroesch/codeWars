@@ -57,7 +57,22 @@
 
 let nextBigger = (n) => {
     let digits = n.toString().split("")
+    let descSort = new Array(...digits).sort((a, b) => b - a)
+    let ascSort = Array.from(new Set(digits)).sort()
     let word = parseInt(digits.join(""))
+    console.log(descSort.join(""), ascSort.join(""), word)
+    if (descSort.join("") == word) {
+        console.log("descSort")
+        return -1
+    }
+    if (ascSort.join("") == word) {
+        console.log("ascSort")
+        let temp = digits[digits.length - 1]
+        digits[digits.length - 1] = digits[digits.length - 2]
+        digits[digits.length - 2] = temp
+        return parseInt(digits.join(""))
+        //switch last two digits
+    }
     let end = digits.length - 1
     let swapspot
     for (let i = digits.length - 2; i >= 0; i--) {// find the first place where the number is sorted ascending (swapspot)
@@ -66,23 +81,30 @@ let nextBigger = (n) => {
             break
         }
     }
+    // console.log(swapspot, digits[swapspot])
     // let newDigits= digits.
-    if (!swapspot) { return -1 } else {//if its in descending order its impossible to make a bigger number
-        //find the smallest digit greater than swapspot value right of the swapspot index (nextSwap)
+    //if its in descending order its impossible to make a bigger number
+    //find the smallest digit greater than swapspot value right of the swapspot index (nextSwap)
+    let localminValue = 10, localminIndex
 
-        for (let i = swapspot; i < digits.length; i++) {
-            if (digits[i])
+    for (let i = swapspot + 1; i < digits.length; i++) {
+        let local = parseInt(digits[i])
+        if (local > digits[swapspot] && local < localminValue) {
+            localminIndex
         }
-
-        //swap swapspot value and nextSwap value
-
-
     }
-}
-nextBigger(23514)
 
-console.log(nextBigger(12), 21)
-console.log(nextBigger(513), 531)
-console.log(nextBigger(2017), 2071)
-console.log(nextBigger(414), 441)
-console.log(nextBigger(144), 414)
+    //swap swapspot value and nextSwap value
+
+    //sort all digits from swapspot index+1 then return
+}
+
+// nextBigger(23514)
+
+console.log(nextBigger(12))//, 21)
+console.log(nextBigger(513))//, 531)
+console.log(nextBigger(2017))//, 2071)
+console.log(nextBigger(414))//, 441)
+console.log(nextBigger(144))//, 414)
+console.log(nextBigger(4321))//, 4321)
+console.log(nextBigger(4333321))//, 4333321)
