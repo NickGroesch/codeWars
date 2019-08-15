@@ -1,3 +1,6 @@
+firstname = "me"
+console.log(firstname)
+
 function decompose(n) {
     let max = n * n
     let left = max
