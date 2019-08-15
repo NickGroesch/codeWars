@@ -28,13 +28,56 @@
 //     }
 //     return results
 // }
-
 // above approach works rigorously but times out, there must be something simpler based on maths!
+
+
+
+
+
+// let nextBigger = (n) => {
+//     let digits = n.toString().split("")
+//     let word = parseInt(digits.join(""))
+//     for (let i = digits.length - 1; i >= 0; i--) {//rather than nested loops and merely testing for 
+//         for (let j = 1; j <= digits.length - 2; j++) {
+//             let local = new Array(...digits)
+//             let swap = i - j
+//             let temp = local[i]
+//             local[i] = local[swap]
+//             local[swap] = temp
+//             let compare = parseInt(local.join(""))
+//             if (compare > word) {
+//                 return compare
+//             }else if(i==0 && j==digits.length-2){return -1}
+//         }
+//     }
+// }
+//this approach only swaps, and sometimes multiple swaps are better
+
+
+
 let nextBigger = (n) => {
     let digits = n.toString().split("")
-    let counter = -1
     let word = parseInt(digits.join(""))
-    while (word <=)
+    let end = digits.length - 1
+    let swapspot
+    for (let i = digits.length - 2; i >= 0; i--) {// find the first place where the number is sorted ascending (swapspot)
+        if (digits[i] < digits[i + 1]) {
+            swapspot = i
+            break
+        }
+    }
+    // let newDigits= digits.
+    if (!swapspot) { return -1 } else {//if its in descending order its impossible to make a bigger number
+        //find the smallest digit greater than swapspot value right of the swapspot index (nextSwap)
+
+        for (let i = swapspot; i < digits.length; i++) {
+            if (digits[i])
+        }
+
+        //swap swapspot value and nextSwap value
+
+
+    }
 }
 nextBigger(23514)
 
