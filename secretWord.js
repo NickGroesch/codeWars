@@ -101,8 +101,15 @@ function recoverSecret(tripArray) {
     console.log(anOb)//now we have some analytics to begin our deduction
     let beginning = ""
     let end = ""
+    let totalLetters = 0
     for (let letter in anOb) {
-        anOb[letter].solved = false
+        totalLetters++
+        let letterCount = 0
+        let value = 0
+        for (let index in anOb[letter]) {
+            letterCount += anOb[letter][index]
+            index == '0' ? value -= anOb[letter][index] : index == "2" ? value += anOb[letter][index] : value += 0;
+        }
         if (!anOb[letter]["2"] && !anOb[letter]["1"]) {//this isn't rigorous
             console.log(`${letter} must be the beginning`)
             beginning += letter
@@ -111,14 +118,31 @@ function recoverSecret(tripArray) {
             console.log(`${letter} must be the end`)
             end += letter
         }
-        let letterCount = 0
-        for (let index in anOb[letter]) {
-            letterCount += anOb[letter][index]
-        }
+        anOb[letter].solved = false
         anOb[letter].count = letterCount
+        anOb[letter].value = value
+        anOb[letter].comesBefore = []
+        anOb[letter].comesAfter = []
+    }
+    tripArray.forEach(triplet => {
+        let first = triplet[0]
+        let second = triplet[1]
+        let third = triplet[2]
+        anOb[first].comesBefore.push(second, third)
+        anOb[third].comesAfter.push(second, first)
+        anOb[second].comesBefore.push(third)
+        anOb[second].comesAfter.push(first)
+    })
+    for (let letter in anOb) {
+        anOb[letter].comesBefore = new Array(... new Set(anOb[letter].comesBefore))
+        anOb[letter].comesAfter = new Array(... new Set(anOb[letter].comesAfter))
     }
     console.log(anOb)//now we have some analytics to begin our deduction
     console.log(beginning)
     console.log(end)
+    console.log(totalLetters)
+    console.log("-----------------------")
+    let word = [beginning, end]
+
 
 }
