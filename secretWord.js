@@ -220,6 +220,7 @@ function recoverSecret(tripArray) {
         constructor(noOfVertices) {
             this.noOfVertices = noOfVertices
             this.AdjList = new Map();
+            this.globPath
         }
         addVertex(v) {
             this.AdjList.set(v, [])
@@ -244,6 +245,73 @@ function recoverSecret(tripArray) {
         }
         // bfs(startingNode)//breadth first search
         // dfs(startingNode)//depth first search
+        findPath() {
+            const nodes = []
+            const visited = {}
+            for (let edge of this.AdjList) {
+                visited[edge[0]] = false
+                nodes.push(edge[0])
+            }
+            for (let i = 0; i < nodes.length; i++) {
+                let path = []
+                const node = nodes[i]
+                const localVisited = JSON.parse(JSON.stringify(visited))
+                this._pathUtil(node, localVisited, path)
+            }
+        }
+        _pathUtil(vertex, visited, path) {
+
+            if (!visited[vertex]) {
+                visited[vertex] = true
+                // console.log("hey", vertex, visited)
+                let localPath = new Array(...path)
+                localPath.push(vertex)
+                // console.log(localPath)
+                if (localPath.length == this.noOfVertices) {
+                    this.globPath = localPath
+                }
+                let neighbors = this.AdjList.get(vertex)
+                // console.log(neighbors)
+                // if (neighbors.length) {
+                for (let i = 0; i < neighbors.length; i++) {
+                    const localVisited = JSON.parse(JSON.stringify(visited))
+                    const neighbor = neighbors[i]
+                    this._pathUtil(neighbor, localVisited, localPath)
+                }
+            }
+        }
+
+        // dfs() {
+        //     const nodes = []
+        //     const visited = {}
+        //     for (let edge of this.AdjList) {
+        //         visited[edge[0]] = false
+        //         nodes.push(edge[0])
+        //     }
+        //     // console.log(visited)
+        //     console.log("wtf", nodes)
+        //     for (let i = 0; i < nodes.length; i++) {
+        //         const node = nodes[i]
+        //         const localVisited = JSON.parse(JSON.stringify(visited))
+        //         this._dfsUtil(node, localVisited)
+        //     }
+        // }
+        // _dfsUtil(vertex, visited) {
+
+        //     if (!visited[vertex]) {
+        //         visited[vertex] = true
+        //         console.log("hey", vertex, visited)
+        //         const localVisited = JSON.parse(JSON.stringify(visited))
+        //         let neighbors = this.AdjList.get(vertex)
+        //         console.log(neighbors)
+        //         // if (neighbors.length) {
+        //         for (let i = 0; i < neighbors.length; i++) {
+        //             const neighbor = neighbors[i]
+        //             this._dfsUtil(neighbor, localVisited)
+        //         }
+        //         // }
+        //     }
+        // }
     }
     let vertices = []
     let edges = []
@@ -251,23 +319,35 @@ function recoverSecret(tripArray) {
         triplet.forEach(letter => {
             if (!vertices.includes(letter)) { vertices.push(letter) }
         })
-        if (!edges.includes(`${triplet[0]}->${triplet[1]}`)) { edges.push(`${triplet[0]}->${triplet[1]}`) }///this isn't working, perhaps includes doesn't like to search arrays
+        if (!edges.includes(`${triplet[0]}->${triplet[1]}`)) { edges.push(`${triplet[0]}->${triplet[1]}`) }
         if (!edges.includes(`${triplet[0]}->${triplet[2]}`)) { edges.push(`${triplet[0]}->${triplet[2]}`) }
         if (!edges.includes(`${triplet[1]}->${triplet[2]}`)) { edges.push(`${triplet[1]}->${triplet[2]}`) }
-        // edges.push([triplet[0], triplet[1]], [triplet[0], triplet[2]], [triplet[1], triplet[2]])
     })
     let secretGraph = new Graph(vertices.length)
     vertices.forEach(vertex => secretGraph.addVertex(vertex))
-    // let cleanEdges = new Array(...new Set(edges))
     edges.forEach(edge => {
         let local = edge.split('->')
         secretGraph.addDirectedEdge(local[0], local[1])
     })
     secretGraph.printGraph()
-    console.log("a", vertices)
-    console.log("b", edges)
-    // console.log("c", cleanEdges)
-    console.log(vertices.length)
-    console.log(edges.length)
-    // console.log(cleanEdges.length)
+    // function dfs(graph) {
+    //     let nodes = []
+    //     let visited = {}
+    //     for (let edge of graph.AdjList) {
+    //         visited[edge[0]] = false
+    //         nodes.push(edge[0])
+    //     }
+    //     console.log(visited)
+    //     console.log(nodes)
+    // }
+    // function _dfsUtil(vertex, visitedArray){
+    //     if (!visitedArray[vertex]){
+    //         visitedArray[vertex]=true
+    //         const neighbors= this
+    //     }
+    // }
+    // console.log("x", secretGraph.AdjList.get("t"))
+    secretGraph.findPath()
+
+    return secretGraph.globPath.join("")
 }
